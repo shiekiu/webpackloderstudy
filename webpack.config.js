@@ -2,7 +2,9 @@ const path = require('path');
 const htmlWebpackPlugin = require('html-webpack-plugin');
 module.exports={
 	context:__dirname,
+	// 入口文件
 	entry:'./src/app.js',
+	// 输出
 	output : {
 		filename:'js/[name].bundle.js',
 		path: path.resolve(__dirname,'./dist')
@@ -14,7 +16,8 @@ module.exports={
              ,{ test: /\.css$/, loaders: [ 'style-loader','css-loader?importLoaders=1','postcss-loader']}
              ,{ test: /\.less$/, loader: 'style-loader!css-loader!postcss-loader!less-loader'}
              ,{ test: /\.scss$/, loader: 'style-loader!css-loader!postcss-loader!sass-loader'}
-             ,{ test: /\.(png|jpg|gif|svg)$/i, loader: 'file-loader'}
+             //增加图片压缩功能，如果图片小于5k转成64位数据，减少http请求
+             ,{ test: /\.(png|jpg|gif|svg)$/i, loaders: ['url-loader?limit=5000&name=assets/[name]-[hash:5].[ext]','image-webpack-loader']}
         ]
     },
 // 插件
